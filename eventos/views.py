@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -31,6 +32,7 @@ class RegistroUsuarioView(CreateView):
 
 class CustomLoginView(LoginView):
     template_name = 'registro/login.html'
+    success_url = reverse_lazy('lista_cursos')
 
     def form_invalid(self, form):
         messages.error(self.request, 'Usuario o contraseña incorrecto. Vuelva a ingresar')
@@ -56,7 +58,7 @@ class ListaEventosView(LoginRequiredMixin, ListView):
     context_object_name = 'eventos'
 
     def get_queryset(self):
-        return Evento.objects.all()
+        return self.request.user.evento_creado.all()
 
 
 class DetalleEventoView(LoginRequiredMixin, DetailView):
@@ -102,4 +104,4 @@ class MisEventosView(LoginRequiredMixin, ListView):
     context_object_name = 'evento'
 
     def get_queryset(self):
-        return self.request.user.pk.inscritos.all()
+        return Inscrito.objects.filter.all()

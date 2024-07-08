@@ -10,9 +10,7 @@
                     <th>Descripci&oacute;n</th>
                     <th>Ubicaci&oacute;n</th>
                     <th>Fecha y Hora</th>
-                    <th>Cupos</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th>Acciones{{ user.id }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +20,7 @@
                         <td>{{ evento.describe }}</td>
                         <td>{{ evento.ubica }}</td>
                         <td>{{ evento.fecha }}</td>
-                        <td><a href="{% url 'detalle_evento' curso.pk %}" class="btn btn-primary btn-sm">Ver detalles</a></td>
+                        <td><a href="#" class="btn btn-primary btn-sm">Ver detalles{{ evento.pk }}</a></td>
                     </tr>  
                     {% empty %}
                         <tr>
