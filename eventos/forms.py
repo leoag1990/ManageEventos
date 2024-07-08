@@ -39,6 +39,12 @@ class EventoForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Evento
         fields = ['nombre', 'describe', 'ubica', 'fecha']
+        labels = {
+            'nombre': 'Nombre',
+            'describe': 'Detalles del Evento (Describe algo sobre el evento)',
+            'ubica': 'Ubicación del Evento (Google Maps)',
+            'fecha': 'Fecha del Evento',
+        }
 
         widgets = {
             'fecha': forms.DateTimeInput(attrs={'type': 'datetime-local'}),

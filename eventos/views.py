@@ -15,7 +15,7 @@ from eventos.models import Evento, Inscrito
 class RegistroUsuarioView(CreateView):
     form_class = RegistroUsuarioForm
     template_name = 'registro/registro.html'
-    success_url = reverse_lazy('lista_cursos')
+    success_url = reverse_lazy('lista_eventos')
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -32,7 +32,7 @@ class RegistroUsuarioView(CreateView):
 
 class CustomLoginView(LoginView):
     template_name = 'registro/login.html'
-    success_url = reverse_lazy('lista_cursos')
+    success_url = reverse_lazy('lista_eventos')
 
     def form_invalid(self, form):
         messages.error(self.request, 'Usuario o contraseña incorrecto. Vuelva a ingresar')
@@ -57,8 +57,8 @@ class ListaEventosView(LoginRequiredMixin, ListView):
 
     context_object_name = 'eventos'
 
-    def get_queryset(self):
-        return self.request.user.evento_creado.all()
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
 
 
 class DetalleEventoView(LoginRequiredMixin, DetailView):
@@ -86,13 +86,17 @@ class InscribirEventoView(LoginRequiredMixin, DetailView):
         return redirect('detalle_evento', pk=evento.pk)
 
 
-class CrearEventoView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CrearEventoView(LoginRequiredMixin, CreateView):
     model = Evento
     form_class = EventoForm
     template_name = 'eventos/eventos_form.html'
-    success_url = reverse_lazy('nuevos_eventos')
+    context_object_name = 'evento'
+    success_url = reverse_lazy('lista_eventos')
 
     def form_valid(self, form):
+        formulario = form.save(commit=False)
+        formulario.usuario_creador = self.request.user
+        formulario.save()
         response = super().form_valid(form)
         messages.success(self.request, 'El curso se ha creado correctamente.')
         return response
