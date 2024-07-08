@@ -67,23 +67,13 @@ class DetalleEventoView(LoginRequiredMixin, DetailView):
     context_object_name = 'evento'
 
 
-class FiltrarInscritoView(LoginRequiredMixin, DetailView):
-    model = Inscrito
-    template_name = 'eventos/detalle_evento.html'
-    context_object_name = 'inscrito'
-
-
-class InscribirEventoView(LoginRequiredMixin, DetailView):
+class InscribirCursoView(LoginRequiredMixin, DetailView):
     model = Inscrito
 
     def get(self, request, *args, **kwargs):
-        evento = self.get_object()
-        if request.user not in evento.usuario.all():
-            evento.usuario.add(request.user)
-            messages.success(request, f'Éxito al inscribirse en {evento.nombre}')
-        else:
-            messages.error(request, 'No se pudo realizar la inscripción. Ya está inscrito.')
-        return redirect('detalle_evento', pk=evento.pk)
+        event = Evento.objects.get(id=kwargs['pk'])
+        Inscrito.objects.create(evento=event, usuario=request.user)
+        return redirect('lista_eventos')
 
 
 class CrearEventoView(LoginRequiredMixin, CreateView):
@@ -103,9 +93,22 @@ class CrearEventoView(LoginRequiredMixin, CreateView):
 
 
 class MisEventosView(LoginRequiredMixin, ListView):
-    model = Inscrito
+    model = Evento
     template_name = 'eventos/nuevos_eventos.html'
-    context_object_name = 'evento'
+    context_object_name = 'eventos'
 
     def get_queryset(self):
-        return Inscrito.objects.filter.all()
+        return self.request.user.evento_creado.all()
+
+
+class FiltrarInscritoView(LoginRequiredMixin, ListView):
+    model = Inscrito
+    template_name = 'eventos/eventos_inscritos.html'
+    context_object_name = 'inscrito'
+
+    def get_queryset(self):
+        inscrito = self.request.user.usuario_id.all()
+        return inscrito
+
+
+

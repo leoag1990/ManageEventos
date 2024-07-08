@@ -10,17 +10,17 @@
                     <th>Descripci&oacute;n</th>
                     <th>Ubicaci&oacute;n</th>
                     <th>Fecha y Hora</th>
-                    <th>Acciones{{ user.id }}</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for evento in eventos %}
+                {% for inscribe in inscrito %}
                     <tr>
-                        <td>{{ evento.nombre }}</td>
-                        <td>{{ evento.describe }}</td>
-                        <td>{{ evento.ubica }}</td>
-                        <td>{{ evento.fecha }}</td>
-                        <td><a href="{% url 'detalle_evento' evento.id %}" class="btn btn-primary btn-sm" onclick="mensajeEspera()">Ver detalles{{ evento.pk }}</a></td>
+                        <td>{{ inscribe.evento_id }}</td>
+                        <td>{{ inscribe.describe }}</td>
+                        <td>{{ inscribe.ubica }}</td>
+                        <td>{{ inscribe.fecha }}</td>
+                        <td><a href="{% url 'detalle_evento' inscribe.evento_id %}" class="btn btn-primary btn-sm" onclick="mensajeEspera()">Ver detalles{{ inscribe.evento_id }}</a></td>
                     </tr>  
                     {% empty %}
                         <tr>

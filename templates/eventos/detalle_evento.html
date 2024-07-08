@@ -2,16 +2,24 @@
 {% block titulo %}{% endblock %}
 {% block contenido %}
     <div class="card-body">
-        <h2 class="card-title">{{ evento.nombre }}</h2>
-        <p class="card-text">{{ evento.describe }}</p>
+        <h2 class="card-title" style="margin-bottom:1em">{{ evento.nombre }}</h2>
+        <div>
+            <label for="{{ evento.nombre }}" style="margin-bottom:0.4em"><b>Descripci&oacute;n{{ user.id }}</b></label>
+            <textarea disabled class="form-control" id="{{ evento.nombre }}" rows="5">{{ evento.describe }}</textarea>
+        </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><strong>Fecha:</strong> {{ evento.fecha }}</li>
-            <li class="list-group-item"><strong>Ubicaci&oacute;:</strong> {{ evento.ubica }}</li>
+            <li class="list-group-item"><strong>Ubicaci&oacute;n:</strong> 
+                <a href="{{ evento.ubica }}" target="_blank">{{ evento.ubica }}</a>
+            </li>
         </ul>
-        {% if user in inscrito.usuario.all %}
+        {% if user.id in usuario.all %}
             <p class="mt-3 text-success">Ya est&aacute;s inscrito en este curso</p>
         {% else %}
-            <a href="{% url 'inscribir_curso' evento.pk %}" class="btn btn-primary mt-3">Inscribirse</a>
+            <a href="{% url 'inscribir_evento' evento.id %}" onclick='mensaje()' class="btn btn-primary mt-3">Inscribirse{{ evento.id }}</a>
         {% endif %}
+        {% for prueba in Inscrito.usuario.pk %}
+            <b>Hola</b>
+        {% endfor %}
     </div>
 {% endblock %}
