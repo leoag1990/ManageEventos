@@ -15,9 +15,9 @@ class Evento(models.Model):
 
 
 class Inscrito(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='evento_id', null=False, blank=False)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario_id', null=False, blank=False)
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='registro', null=False, blank=False)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registro', null=False, blank=False)
     fecha_inscribe = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.usuario} inscrito a {self.evento}"
+        return f"{self.usuario.username} inscrito a {self.evento.nombre}"

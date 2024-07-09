@@ -113,5 +113,5 @@ class FiltrarInscritoView(LoginRequiredMixin, DetailView):
 
 def mostrar_asistentes(request, id_evento):
     evento = get_object_or_404(Evento, id=id_evento)
-    asistentes = evento.evento_id.all()  # trae los asistentes con en el evento con id que se pasa por get
-    return render(request, 'eventos/mostrar_asistentes.html', {'event': evento, 'attendees': asistentes})
+    asistentes = evento.registro.all()  # trae los asistentes con en el evento con id que se pasa por get
+    return render(request, 'eventos/mostrar_asistentes.html', {'evento': evento, 'asistentes': asistentes})
