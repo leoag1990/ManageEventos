@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Asistentes{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <h2 class="text-center mt-4">Asistentes del Evento: {{ evento.nombre }}</h2>
+        <ul class="list-group mt-4">
+            {% for inscrito in asistentes %}
+                <li class="list-group-item">{{ inscrito.user.nombre }} - {{ inscrito.fecha }}</li>
+            {% empty %}
+                <li class="list-group-item">No hay asistentes registrados aún.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, ListView, DetailView
@@ -71,8 +71,8 @@ class InscribirCursoView(LoginRequiredMixin, DetailView):
     model = Inscrito
 
     def get(self, request, *args, **kwargs):
-        event = Evento.objects.get(id=kwargs['pk'])
-        Inscrito.objects.create(evento=event, usuario=request.user)
+        id_evento = Evento.objects.get(id=kwargs['pk'])
+        Inscrito.objects.create(evento=id_evento, usuario=request.user)
         return redirect('lista_eventos')
 
 
@@ -101,14 +101,17 @@ class MisEventosView(LoginRequiredMixin, ListView):
         return self.request.user.evento_creado.all()
 
 
-class FiltrarInscritoView(LoginRequiredMixin, ListView):
+class FiltrarInscritoView(LoginRequiredMixin, DetailView):
     model = Inscrito
     template_name = 'eventos/eventos_inscritos.html'
     context_object_name = 'inscrito'
 
     def get_queryset(self):
         inscrito = self.request.user.usuario_id.all()
-        return inscrito
+        return Evento.objects.filter(evento=inscrito.evento)
 
 
-
+def mostrar_asistentes(request, id_evento):
+    evento = get_object_or_404(Evento, id=id_evento)
+    asistentes = evento.evento_id.all()  # trae los asistentes con en el evento con id que se pasa por get
+    return render(request, 'eventos/mostrar_asistentes.html', {'event': evento, 'attendees': asistentes})

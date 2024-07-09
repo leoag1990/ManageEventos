@@ -16,4 +16,5 @@ urlpatterns = [
     path('eventos-inscritos/', FiltrarInscritoView.as_view(), name='eventos_inscritos'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('evento/<int:pk>/inscribir/', InscribirCursoView.as_view(), name='inscribir_evento'),
+    path('evento/<int:id_evento>/asistente/', views.mostrar_asistentes, name='mostrar_participantes'),
 ]

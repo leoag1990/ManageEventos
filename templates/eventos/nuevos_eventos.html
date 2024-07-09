@@ -21,6 +21,7 @@
                         <td>{{ evento.ubica }}</td>
                         <td>{{ evento.fecha }}</td>
                         <td><a href="{% url 'detalle_evento' evento.id %}" class="btn btn-primary btn-sm" onclick="mensajeEspera()">Ver detalles{{ evento.pk }}</a></td>
+                        <td><a href="{% url 'mostrar_participantes' evento.id %}" class="btn btn-warning btn-sm" onclick="mensajeEspera()">Ver asistentes{{ evento.pk }}</a></td>
                     </tr>  
                     {% empty %}
                         <tr>
