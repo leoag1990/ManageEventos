@@ -20,4 +20,4 @@ class Inscrito(models.Model):
     fecha_inscribe = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.usuario.username} inscrito a {self.evento.nombre}"
+        return f"{self.usuario.first_name}"

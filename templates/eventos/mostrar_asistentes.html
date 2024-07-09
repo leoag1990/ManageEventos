@@ -6,7 +6,7 @@
         <h2 class="text-center mt-4">Asistentes del Evento: {{ evento.nombre }}</h2>
         <ul class="list-group mt-4">
             {% for inscrito in asistentes %}
-                <li class="list-group-item">Nombre: {{ inscrito.user.username }} - Fecha: {{ inscrito.fecha }}</li>
+                <li class="list-group-item">Nombre: {{ inscrito }} - Fecha: {{ evento.fecha }}</li>
             {% empty %}
                 <li class="list-group-item">No hay asistentes registrados aún.</li>
             {% endfor %}
