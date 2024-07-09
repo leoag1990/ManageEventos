@@ -101,17 +101,16 @@ class MisEventosView(LoginRequiredMixin, ListView):
         return self.request.user.evento_creado.all()
 
 
-class FiltrarInscritoView(LoginRequiredMixin, DetailView):
+class FiltrarInscritoView(LoginRequiredMixin, ListView):
     model = Inscrito
     template_name = 'eventos/eventos_inscritos.html'
     context_object_name = 'inscrito'
 
     def get_queryset(self):
-        inscrito = self.request.user.usuario_id.all()
-        return Evento.objects.filter(evento=inscrito.evento)
+        return self.request.user.registro1.all()
 
 
 def mostrar_asistentes(request, id_evento):
     evento = get_object_or_404(Evento, id=id_evento)
-    asistentes = evento.registro.all()  # trae los asistentes con en el evento con id que se pasa por get
+    asistentes = evento.registro2.all()  # trae los asistentes con en el evento con id que se pasa por get
     return render(request, 'eventos/mostrar_asistentes.html', {'evento': evento, 'asistentes': asistentes})

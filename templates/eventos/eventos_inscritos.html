@@ -14,13 +14,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% for inscribe in Evento %}
+                {% for ins in inscrito %}
                     <tr>
-                        <td>{{ inscribe.evento_id }}</td>
-                        <td>{{ inscribe.describe }}</td>
-                        <td>{{ inscribe.ubica }}</td>
-                        <td>{{ inscribe.fecha }}</td>
-                        <td><a href="{% url 'detalle_evento' inscribe.evento_id %}" class="btn btn-primary btn-sm" onclick="mensajeEspera()">Ver detalles{{ inscribe.evento_id }}</a></td>
+                        <td>{{ ins.evento_id }}</td>
+                        <td>{{ ins.describe }}</td>
+                        <td>{{ ins.ubica }}</td>
+                        <td>{{ ins.fecha }}</td>
+                        <td><a href="{% url 'detalle_evento' ins.evento_id %}" class="btn btn-primary btn-sm" onclick="mensajeEspera()">Ver detalles{{ ins.evento_id }}</a></td>
                     </tr>  
                     {% empty %}
                         <tr>
